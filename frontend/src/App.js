@@ -73,7 +73,7 @@ class App extends Component {
               <select value={this.state.value} onChange={this.handleChange}>
                 <option value="frank3562@gmail.com">Dr. Franklin</option>
                 <option value="tom.pruim1@gmail.com">Dr Pruim</option>
-                <option value="info@aenjoy.biz">Dr Domore</option>
+                <option value="info@aenjoy.biz">Dr A Enjoy</option>
                 <option value="sm94010@gmail.com">Dr. Who</option>
               </select>
             </label>
