@@ -20,14 +20,13 @@ class App extends Component {
   sendToDoc(recipient, rxdata) {
     const url = `/api/todoc?recipientEmail=${recipient}&data=${rxdata}`;
     // console.error('[App.js]', url);
-    this.setState({ submitted: true }, () =>
-      console.log('submitted updated', this.state.submitted)
-    );
+    this.setState({ submitted: true });
     return Promise.resolve(true)
       .then(() => {
         return Promise.resolve(fetch(url));
       })
       .then(data => {
+        this.setState({ submitted: false });
         return true;
       })
       .catch(ex => {
