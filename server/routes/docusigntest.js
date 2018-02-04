@@ -25,11 +25,12 @@ var     async = require("async"),		// async module
           phoneNumber = 17085190579;
         }else if (dr == 'frank3562@gmail.com') {
           phoneNumber = 16303407876;
+        }else if (dr == 'info@aenjoy.biz') {
+          phoneNumber = 19253886232;
         }else if( dr == 'sm94010@gmail.com') {
           phoneNumber = 14153356477;
         }else{
-          phoneNumber = 17085190579;
-          message = "The perscription for Paul Zipser has been filled at Fred's Pharmacy ";
+          phoneNumber = 16303407876;
         }
 
         message = message + " -- " + url;
