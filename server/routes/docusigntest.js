@@ -6,10 +6,8 @@ module.exports = function(recipientName, recipientEmail, documentName, document,
   console.log('[docusigntest.js]', recipientName, recipientEmail);
 var 	email = process.env.email,				// your account email
     	password = process.env.password,			// your account password
-    	integratorKey = process.env.integratorKey,			// your Integrator Key (found on the Preferences -> API page)
-    // recipientName = "Dr. Who",			// recipient (signer) name
-    // recipientEmail = "sm94010@gmail.com"
-    // 	documentName = "chamba.jpg",			// copy document with this name into same directory!
+      integratorKey = process.env.integratorKey,			// your Integrator Key (found on the Preferences -> API page)
+      recipientId = Math.floor(Math.random() * Math.floor(1000));
     	baseUrl = ""; 				// we will retrieve this through the Login call
 
 async.waterfall(
@@ -92,15 +90,17 @@ async.waterfall(
       };
 
     	var url = baseUrl + "/envelopes";
-    	// following request body will place 1 signature tab 100 pixels to the right and
-    	// 100 pixels down from the top left of the document that you send in the request
-		var body = {
+
+      console.log(recipientEmail);
+      console.log(recipientId);
+      console.log(`${recipientId}_100`);
+      var body = {
 			"recipients": {
 				"signers": [{
 					"email": recipientEmail,
 					"name": recipientName,
-					"recipientId": 1,
-          "clientUserId": `${recipientEmail}_100`,
+					"recipientId": recipientId,
+          "clientUserId": `${recipientId}_100`,
           "tabs": {
 						"signHereTabs": [{
 							"xPosition": "100",
@@ -158,7 +158,7 @@ async.waterfall(
 				"authenticationMethod": "PaperDocuments",
 				"email": recipientEmail,
 				"userName": recipientName,
-				"clientUserId": `${recipientEmail}_100`,	// must match clientUserId in step 2!
+				"clientUserId": `${recipientId}_100`,	// must match clientUserId in step 2!
 			});
 
 		// set request url, method, body, and headers

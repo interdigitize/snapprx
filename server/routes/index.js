@@ -93,6 +93,7 @@ router.get('/docusign', function(req, res, next){
 });
 
 function notify(url, dr){
+  console.log(url, dr);
 var TeleSignSDK = require('telesignsdk');
 
 const customerId = "DCE62E42-750D-4B42-B1F0-FABB01817C61"; // Todo: find in portal.telesign.com
@@ -124,6 +125,8 @@ if(dr == 'tom.pruim1@gmail.com'){
 console.log("## MessagingClient.message ##");
 
 function messageCallback(error, responseBody) {
+
+    console.log('callback');
     if (error === null) {
         console.log(`Messaging response for messaging phone number: ${phoneNumber}` +
             ` => code: ${responseBody['status']['code']}` +
