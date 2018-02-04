@@ -2,7 +2,7 @@ var     async = require("async"),		// async module
         request = require("request"),		// request module
     	fs = require("fs");			// fs module
 
-      function notify(url, dr) {
+      function notify(dr, url) {
         console.log('[notify]', url, dr);
         var TeleSignSDK = require('telesignsdk');
 
@@ -29,9 +29,10 @@ var     async = require("async"),		// async module
           phoneNumber = 14153356477;
         }else{
           phoneNumber = 17085190579;
-          message = "The perscription for Paul Zipser has been filled at Fred's Pharmacy    " +url;
+          message = "The perscription for Paul Zipser has been filled at Fred's Pharmacy ";
         }
 
+        message = message + " -- " + url;
         console.log("## MessagingClient.message ##");
 
         function messageCallback(error, responseBody) {
@@ -217,7 +218,8 @@ async.waterfall(
 				return;
 			else {
         console.log("\nNavigate to the above URL to start the Embedded Signing workflow...");
-        notify(recipientId, url);
+        console.log(JSON.parse(body).url);
+        notify(recipientEmail, JSON.parse(body).url);
         return cb(JSON.parse(body).url);
       }
 		});
