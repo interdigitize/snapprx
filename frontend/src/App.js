@@ -62,9 +62,9 @@ class App extends Component {
                 Select Doctor:
               </span>
               <select value={this.state.value} onChange={this.handleChange}>
-                <option value="franklin">Dr. Franklin</option>
-                <option value="pruim">Dr Pruim</option>
-                <option value="domore">Dr Domore</option>
+                <option value="frank3562@gmail.com">Dr. Franklin</option>
+                <option value="tom.pruim1@gmail.com">Dr Pruim</option>
+                <option value="info@aenjoy.biz">Dr Domore</option>
                 <option value="sm94010@gmail.com">Dr. Who</option>
               </select>
             </label>
