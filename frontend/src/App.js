@@ -7,27 +7,31 @@ import 'myscript/dist/myscript.min.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: 'who' };
+    this.state = {
+      value: 'who',
+      submitted: false
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.sendToDoc = this.sendToDoc.bind(this);
   }
 
   sendToDoc(recipient, rxdata) {
-    const self = this;
     const url = `/api/todoc?recipientEmail=${recipient}&data=${rxdata}`;
-    console.error('[App.js]', url);
+    // console.error('[App.js]', url);
+    this.setState({ submitted: true }, () =>
+      console.log('submitted updated', this.state.submitted)
+    );
     return Promise.resolve(true)
       .then(() => {
         return Promise.resolve(fetch(url));
-      })
-      .then(response => {
-        return response.json();
       })
       .then(data => {
         return true;
       })
       .catch(ex => {
+        this.setState({ submitted: false });
         console.error('[App.js] parsing failed', ex);
       });
   }
@@ -37,8 +41,8 @@ class App extends Component {
   }
 
   handleSubmit(event) {
-    console.log(this.editor.exports);
-    console.log(this.editor.exports['text/plain']);
+    // console.log(this.editor.exports);
+    // console.log(this.editor.exports['text/plain']);
     this.editor.clear();
     this.sendToDoc(this.state.value, this.editor.exports['text/plain']);
     // alert('Your favorite flavor is: ' + this.state.value);
@@ -50,6 +54,11 @@ class App extends Component {
 
     return (
       <div className="App">
+        {this.state.submitted ? (
+          <div className="notification">The RX has been sent!</div>
+        ) : (
+          <span />
+        )}
         <header id="header">
           <div>SnappRX</div>
           <div>Florence Nightingale</div>
