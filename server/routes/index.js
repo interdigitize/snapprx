@@ -29,6 +29,7 @@ router.post('/todoc', function(req, res, next){
         console.log('[index.js]', req.body.recipientName, req.body.recipientEmail);
         docuSignRequest(req.body.recipientName, req.body.recipientEmail, fn, document, function(url) {
           console.log('URL', url);
+          notify(url, req.body.recipientEmail);
           res.status(200).send(url);
         });
       });
@@ -86,9 +87,8 @@ router.get('/docusign', function(req, res, next){
   res.send('200');
 });
 
-function notify(){
+function notify(url, dr){
 var TeleSignSDK = require('telesignsdk');
-
 
 const customerId = "DCE62E42-750D-4B42-B1F0-FABB01817C61"; // Todo: find in portal.telesign.com
 const apiKey = "vUlYMnvCLjMzfHpSY6q5L5rJ1oVoV4yN7ev2bvtlzDNUTFJYlzf5XxQdZSRMsk9nH703IodqeN/XxiXT6HkR+w=="; // Todo: find in portal.telesign.com
@@ -102,9 +102,19 @@ const client = new TeleSignSDK( customerId,
     // userAgent
 );
 
-const phoneNumber = 17085190579;
-const message = "The perscription for Paul Zipser has been filled at Fred's Pharmacy";
+var phoneNumber;
+var message = 'You have recieved a new perscription to sign  '+url;;
 const messageType = "ARN";
+if(dr == 'tom.pruim1@gmail.com'){
+  phoneNumber = 17085190579;
+}else if (dr == 'frank3562@gmail.com') {
+  phoneNumber = 16303407876;
+}else if( dr == 'sm94010@gmail.com') {
+  phoneNumber = 14153356477;
+}else{
+  phoneNumber = 17085190579;
+  message = "The perscription for Paul Zipser has been filled at Fred's Pharmacy"
+}
 
 console.log("## MessagingClient.message ##");
 
@@ -120,5 +130,4 @@ function messageCallback(error, responseBody) {
 
 client.sms.message(messageCallback, phoneNumber, message, messageType);
 };
-
 module.exports = router;
