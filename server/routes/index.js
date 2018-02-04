@@ -51,6 +51,15 @@ router.get('/topharm', function(req, res, next){
   next();
 })
 
+
+router.post('/docusign', function(req, res, next){
+  console.log('docusign post', req.query);
+});
+
+router.get('/docusign', function(req, res, next){
+  console.log('docusign get', req.query);
+});
+
 function notify(){
 var TeleSignSDK = require('telesignsdk');
 
