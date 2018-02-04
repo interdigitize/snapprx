@@ -100,7 +100,7 @@ async.waterfall(
 					"email": recipientEmail,
 					"name": recipientName,
 					"recipientId": 1,
-          "clientUserId": "2001",
+          "clientUserId": `${recipientEmail}_100`,
           "tabs": {
 						"signHereTabs": [{
 							"xPosition": "100",
@@ -158,7 +158,7 @@ async.waterfall(
 				"authenticationMethod": "PaperDocuments",
 				"email": recipientEmail,
 				"userName": recipientName,
-				"clientUserId": "2001",	// must match clientUserId in step 2!
+				"clientUserId": `${recipientEmail}_100`,	// must match clientUserId in step 2!
 			});
 
 		// set request url, method, body, and headers
