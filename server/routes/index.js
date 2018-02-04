@@ -10,6 +10,12 @@ const docuSignRequest = require('./docusigntest.js');
 // var upload = multer({ dest: 'uploads/' })
 var fileupload = require("express-fileupload");
 
+router.post('/notification', function(req, res, next){
+  console.log(req.body);
+  console.log(req.query);
+  res.status(200).end();
+});
+
 router.post('/todoc', function(req, res, next){
   console.log(req.body);
 
