@@ -54,10 +54,12 @@ router.get('/topharm', function(req, res, next){
 
 router.post('/docusign', function(req, res, next){
   console.log('docusign post', req.query);
+  res.send('200');
 });
 
 router.get('/docusign', function(req, res, next){
   console.log('docusign get', req.query);
+  res.send('200');
 });
 
 function notify(){
