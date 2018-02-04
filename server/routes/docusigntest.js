@@ -2,12 +2,14 @@ var     async = require("async"),		// async module
         request = require("request"),		// request module
     	fs = require("fs");			// fs module
 
+module.exports = function(recipientName, recipientEmail, documentName, document, cb) {
+  console.log('[docusigntest.js]', recipientName, recipientEmail);
 var 	email = process.env.email,				// your account email
     	password = process.env.password,			// your account password
     	integratorKey = process.env.integratorKey,			// your Integrator Key (found on the Preferences -> API page)
-    recipientName = "Dr. Who",			// recipient (signer) name
-    recipientEmail = "sm94010@gmail.com"
-    	documentName = "chamba.jpg",			// copy document with this name into same directory!
+    // recipientName = "Dr. Who",			// recipient (signer) name
+    // recipientEmail = "sm94010@gmail.com"
+    // 	documentName = "chamba.jpg",			// copy document with this name into same directory!
     	baseUrl = ""; 				// we will retrieve this through the Login call
 
 async.waterfall(
@@ -132,7 +134,7 @@ async.waterfall(
 				}, {
 					"Content-Type": "application/pdf",
 					'Content-Disposition': 'file; filename="' + documentName + '"; documentId=1',
-					"body": fs.readFileSync(documentName),
+					"body": document,
 				}
 		];
 
@@ -153,7 +155,7 @@ async.waterfall(
 		var method = "POST";
 		var body = JSON.stringify({
 				"returnUrl": "http://www.docusign.com/devcenter",
-				"authenticationMethod": "email",
+				"authenticationMethod": "PaperDocuments",
 				"email": recipientEmail,
 				"userName": recipientName,
 				"clientUserId": "2001",	// must match clientUserId in step 2!
@@ -166,8 +168,10 @@ async.waterfall(
 		request(options, function(err, res, body) {
 			if(!parseResponseBody(err, res, body))
 				return;
-			else
-				console.log("\nNavigate to the above URL to start the Embedded Signing workflow...");
+			else {
+        console.log("\nNavigate to the above URL to start the Embedded Signing workflow...");
+        return cb(JSON.parse(body).url);
+      }
 		});
 	}
 ]);
@@ -208,3 +212,4 @@ function parseResponseBody(err, res, body) {
 	}
 	return JSON.parse(body);
 }
+};
